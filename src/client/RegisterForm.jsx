@@ -20,7 +20,6 @@ function RegisterForm({ onRegister, goToLogin }) {
 			const verificationJSON = await verificationResp.json();
 			if (verificationJSON && verificationJSON.verified) {
 				onRegister();
-				goToLogin();
 			} else {
 				setErr(
 					`Oh no, something went wrong! Response: ${JSON.stringify(
@@ -34,7 +33,7 @@ function RegisterForm({ onRegister, goToLogin }) {
 				setErr(
 					'Error: Authenticator was probably already registered by user'
 				);
-				goToLogin();
+				onRegister();
 			} else {
 				setErr(error.message);
 			}
@@ -46,7 +45,7 @@ function RegisterForm({ onRegister, goToLogin }) {
 		<form onSubmit={handleSubmit}>
 			<button
 				type='button'
-				onClick={goToLogin}
+				onClick={onRegister}
 			>
 				Go to login
 			</button>
