@@ -6,8 +6,8 @@ const asyncHandler = require('express-async-handler');
 const Twilio = require('twilio');
 const base64url = require('base64url');
 const SimpleWebAuthnServer = require('@simplewebauthn/server');
-import session from 'express-session';
-import memoryStore from 'memorystore';
+const session = require('express-session')
+const memoryStore = require('memorystore');
 
 const {
 	//Registration
