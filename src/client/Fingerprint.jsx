@@ -9,7 +9,6 @@ function Fingerprint() {
 	const [isRegistered, setIsRegistered] = useState(true);
 	const [username, setUsername] = useState('');
 	return (
-		<UserContext.Provider value={username}>
 			<div>
 				{browserSupportsWebAuthn() ? (
 					isRegistered ? (
@@ -34,7 +33,6 @@ function Fingerprint() {
 					<div>Browser does not support Web Authentication!</div>
 				)}
 			</div>
-		</UserContext.Provider>
 	);
 }
 export default Fingerprint;
