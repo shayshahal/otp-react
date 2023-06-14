@@ -1,7 +1,7 @@
 import { startRegistration } from '@simplewebauthn/browser';
 import { useState } from 'react';
 
-function RegisterForm({ onRegister }) {
+function RegisterForm({ onRegister, goToLogin }) {
 	const [err, setErr] = useState('');
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -20,6 +20,7 @@ function RegisterForm({ onRegister }) {
 			const verificationJSON = await verificationResp.json();
 			if (verificationJSON && verificationJSON.verified) {
 				onRegister();
+				goToLogin();
 			} else {
 				setErr(
 					`Oh no, something went wrong! Response: ${JSON.stringify(
@@ -33,6 +34,7 @@ function RegisterForm({ onRegister }) {
 				setErr(
 					'Error: Authenticator was probably already registered by user'
 				);
+				goToLogin();
 			} else {
 				setErr(error.message);
 			}
@@ -42,19 +44,13 @@ function RegisterForm({ onRegister }) {
 	}
 	return (
 		<form onSubmit={handleSubmit}>
-			<label htmlFor='username'>
-				Username:
-				<input
-					type='text'
-					id='username'
-					name='username'
-					autoComplete='webauthn'
-					autoFocus
-					required
-				/>
-			</label>
-
 			<span>{err}</span>
+			<button
+				type='button'
+				onClick={goToLogin}
+			>
+				Go to login
+			</button>
 			<button>Register</button>
 		</form>
 	);

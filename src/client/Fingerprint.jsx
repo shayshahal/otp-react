@@ -6,8 +6,7 @@ import RegisterForm from './RegisterForm';
 
 function Fingerprint() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [isRegistered, setIsRegistered] = useState(true);
-	const [username, setUsername] = useState('');
+	const [isRegistered, setIsRegistered] = useState(false);
 	return (
 			<div>
 				{browserSupportsWebAuthn() ? (
@@ -15,18 +14,16 @@ function Fingerprint() {
 						isLoggedIn ? (
 							<LogoutForm
 								onLogout={() => setIsLoggedIn(false)}
-								username={username}
 							/>
 						) : (
 							<LoginForm onLogin={() => setIsLoggedIn(true)} />
 						)
 					) : (
 						<RegisterForm
-							onRegister={(username) => {
+							onRegister={() => {
 								setIsRegistered(true);
-								setIsLoggedIn(true);
-								setUsername(username);
 							}}
+							goToLogin={() => setIsLoggedIn(true)}
 						/>
 					)
 				) : (

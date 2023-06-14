@@ -39,12 +39,21 @@ function LoginForm({ onLogin }) {
 	}
 	return (
 		<form onSubmit={handleSubmit}>
+			<label for='username'>Username</label>
 			<input
 				type='text'
 				name='username'
-				id='username'
-				autoComplete='webauthn'
+				autocomplete='webauthn'
+				autofocus
 			/>
+			<br />
+			<label for='password'>Password</label>
+			<input
+				type='password'
+				name='password'
+				autocomplete='webauthn'
+			/>
+			<br />
 			<span>{err}</span>
 			<button>Login</button>
 		</form>

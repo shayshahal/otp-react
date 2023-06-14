@@ -1,4 +1,4 @@
-function LogoutForm({ onLogout, username }) {
+function LogoutForm({ onLogout }) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		onLogout();
@@ -6,7 +6,7 @@ function LogoutForm({ onLogout, username }) {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<h1>Hi, {username}</h1>
+			<h1>Hi!</h1>
 			<button>Logout</button>
 		</form>
 	);
