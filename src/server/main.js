@@ -8,8 +8,14 @@ const base64url = require('base64url');
 const path = require('path');
 const SimpleWebAuthnServer = require('@simplewebauthn/server');
 
-const { generateRegistrationOptions, verifyRegistrationResponse } =
-	SimpleWebAuthnServer;
+const {
+	//Registration
+	generateRegistrationOptions,
+	verifyRegistrationResponse,
+	// Authentication
+	generateAuthenticationOptions,
+	verifyAuthenticationResponse,
+} = SimpleWebAuthnServer;
 
 dotenv.config();
 const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_SERVICE_SID, RP_ID } =
