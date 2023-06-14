@@ -6,7 +6,7 @@ import RegisterForm from './RegisterForm';
 
 function Fingerprint() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [isRegistered, setIsRegistered] = useState(false);
+	const [isRegistered, setIsRegistered] = useState(true);
 	const [username, setUsername] = useState('');
 	return (
 		<UserContext.Provider value={username}>

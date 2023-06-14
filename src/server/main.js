@@ -6,9 +6,7 @@ const asyncHandler = require('express-async-handler');
 const Twilio = require('twilio');
 const base64url = require('base64url');
 const path = require('path');
-const fs = require('fs');
 const SimpleWebAuthnServer = require('@simplewebauthn/server');
-const https = require('https');
 
 const { generateRegistrationOptions, verifyRegistrationResponse } =
 	SimpleWebAuthnServer;
