@@ -1,7 +1,7 @@
 import { startRegistration } from '@simplewebauthn/browser';
 import { useState } from 'react';
 
-function RegisterForm({ onRegister, goToLogin }) {
+function RegisterForm({ onRegister }) {
 	const [err, setErr] = useState('');
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -33,7 +33,6 @@ function RegisterForm({ onRegister, goToLogin }) {
 				setErr(
 					'Error: Authenticator was probably already registered by user'
 				);
-				onRegister();
 			} else {
 				setErr(error.message);
 			}

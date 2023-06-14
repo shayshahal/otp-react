@@ -7,8 +7,10 @@ function LoginForm({ onLogin }) {
 		let asseResp;
 		try {
 			const resp = await fetch('/generate-authentication-options');
-
-			asseResp = await startAuthentication(await resp.json(), true);
+			const opts = await resp.json()
+			console.log(opts);
+			asseResp = await startAuthentication(opts, true);
+			console.log(asseResp);
 			// POST the response to the endpoint that calls
 			const verificationResp = await fetch('/verify-authentication', {
 				method: 'POST',
