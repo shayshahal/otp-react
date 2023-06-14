@@ -50,21 +50,6 @@ function LoginForm({ onLogin }) {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<label htmlFor='username'>Username</label>
-			<input
-				type='text'
-				name='username'
-				autoComplete='webauthn'
-				autoFocus
-			/>
-			<br />
-			<label htmlFor='password'>Password</label>
-			<input
-				type='password'
-				name='password'
-				autoComplete='webauthn'
-			/>
-			<br />
 			<span>{err}</span>
 			<button>Login</button>
 		</form>

@@ -191,8 +191,19 @@ app.post('/verify-authentication', async (req, res) => {
 	let dbAuthenticator;
 	const bodyCredIDBuffer = base64url.toBuffer(body.rawId);
 	// "Query the DB" here for an authenticator matching `credentialID`
+
+	/**
+	 * Make sure two Uint8Arrays are deeply equivalent
+	 */
+	function areEqual(array1, array2) {
+		if (array1.length != array2.length) {
+			return false;
+		}
+
+		return array1.every((val, i) => val === array2[i]);
+	}
 	for (const dev of user.devices) {
-		if (isoUint8Array.areEqual(dev.credentialID, bodyCredIDBuffer)) {
+		if (areEqual(dev.credentialID, bodyCredIDBuffer)) {
 			dbAuthenticator = dev;
 			break;
 		}
