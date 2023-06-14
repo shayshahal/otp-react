@@ -5,8 +5,9 @@ const dotenv = require('dotenv');
 const asyncHandler = require('express-async-handler');
 const Twilio = require('twilio');
 const base64url = require('base64url');
-const path = require('path');
 const SimpleWebAuthnServer = require('@simplewebauthn/server');
+import session from 'express-session';
+import memoryStore from 'memorystore';
 
 const {
 	//Registration
@@ -22,13 +23,13 @@ const { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_SERVICE_SID, RP_ID } =
 	process.env;
 
 const app = express();
+const MemoryStore = memoryStore(session);
 
 const port = process.env.PORT || 5000;
 
 const client = new Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 const expectedOrigin = `https://${RP_ID}`;
-let currentChallenge = undefined;
 const user = {
 	id: 'internalUserId',
 	username: `user@${RP_ID}`,
@@ -38,9 +39,20 @@ const user = {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(express.static(path.join(__dirname, '/client/dist')));
-app.use(express.static(path.join(__dirname, '/client/dist/assets')));
-
+app.use(
+	session({
+		secret: 'secret123',
+		saveUninitialized: true,
+		resave: false,
+		cookie: {
+			maxAge: 86400000,
+			httpOnly: true, // Ensure to not expose session cookies to clientside scripts
+		},
+		store: new MemoryStore({
+			checkPeriod: 86_400_000, // prune expired entries every 24h
+		}),
+	})
+);
 app.use((req, res, next) => {
 	req.body.phoneNumber = '+972' + req.body.phoneNumber;
 	next();
@@ -107,7 +119,7 @@ app.get('/generate-registration-options', (req, res) => {
 
 	const options = generateRegistrationOptions(opts);
 
-	currentChallenge = options.challenge;
+	req.session.currentChallenge = options.challenge;
 
 	res.send(options);
 });
@@ -119,7 +131,7 @@ app.post('/verify-registration', async (req, res) => {
 	try {
 		const opts = {
 			response: body,
-			expectedChallenge: `${currentChallenge}`,
+			expectedChallenge: `${req.session.currentChallenge}`,
 			expectedOrigin,
 			expectedRPID: RP_ID,
 			requireUserVerification: true,
@@ -154,7 +166,7 @@ app.post('/verify-registration', async (req, res) => {
 		}
 	}
 
-	currentChallenge = undefined;
+	req.session.currentChallenge = undefined;
 
 	res.send({ verified });
 });
@@ -180,7 +192,7 @@ app.get('/generate-authentication-options', (req, res) => {
 	 * The server needs to temporarily remember this value for verification, so don't lose it until
 	 * after you verify an authenticator response.
 	 */
-	currentChallenge = options.challenge;
+	req.session.currentChallenge = options.challenge;
 
 	res.send(options);
 });
@@ -219,7 +231,7 @@ app.post('/verify-authentication', async (req, res) => {
 	try {
 		const opts = {
 			response: body,
-			expectedChallenge: `${currentChallenge}`,
+			expectedChallenge: `${req.session.currentChallenge}`,
 			expectedOrigin,
 			expectedRPID: RP_ID,
 			authenticator: dbAuthenticator,
@@ -239,7 +251,7 @@ app.post('/verify-authentication', async (req, res) => {
 		dbAuthenticator.counter = authenticationInfo.newCounter;
 	}
 
-	currentChallenge = undefined;
+	req.session.currentChallenge = undefined;
 
 	res.send({ verified });
 });
