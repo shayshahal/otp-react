@@ -229,16 +229,6 @@ app.post('/verify-authentication', async (req, res) => {
 	res.send({ verified });
 });
 
-const server = https
-	.createServer(
-		{
-			key: fs.readFileSync('key.pem'),
-			cert: fs.readFileSync('cert.pem'),
-		},
-		app
-	)
-	.listen(port, '0.0.0.0', () =>
-		console.log(`Server is listening on port ${port}...`)
-	);
-
-ViteExpress.bind(app, server);
+ViteExpress.listen(app, port, () =>
+	console.log(`Server is listening on port ${port}...`)
+);
