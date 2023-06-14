@@ -44,7 +44,6 @@ function RegisterForm({ onRegister, goToLogin }) {
 	}
 	return (
 		<form onSubmit={handleSubmit}>
-			<span>{err}</span>
 			<button
 				type='button'
 				onClick={goToLogin}
@@ -52,6 +51,8 @@ function RegisterForm({ onRegister, goToLogin }) {
 				Go to login
 			</button>
 			<button>Register</button>
+			<br />
+			<span>{err}</span>
 		</form>
 	);
 }

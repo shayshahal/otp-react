@@ -1,10 +1,9 @@
 import { startAuthentication } from '@simplewebauthn/browser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function LoginForm({ onLogin }) {
 	const [err, setErr] = useState('');
-	async function handleSubmit(e) {
-		e.preventDefault();
+	async function auth() {
 		let asseResp;
 		try {
 			const resp = await fetch('/generate-authentication-options');
@@ -37,6 +36,16 @@ function LoginForm({ onLogin }) {
 			console.error(error);
 		}
 	}
+	async function handleSubmit(e) {
+		e.preventDefault();
+		await auth();
+	}
+
+	useEffect(() => {
+		const callAuth = async () => await auth();
+		callAuth();
+	}, []);
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<label for='username'>Username</label>
