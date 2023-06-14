@@ -39,6 +39,12 @@ function LoginForm({ onLogin }) {
 	}
 	return (
 		<form onSubmit={handleSubmit}>
+			<input
+				type='text'
+				name='username'
+				id='username'
+				autoComplete='webauthn'
+			/>
 			<span>{err}</span>
 			<button>Login</button>
 		</form>
