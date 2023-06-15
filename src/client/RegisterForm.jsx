@@ -8,7 +8,6 @@ function RegisterForm({ onRegister }) {
 		let attResp;
 		try {
 			const resp = await fetch('/generate-registration-options');
-			// Pass the options to the authenticator and wait for a response
 			attResp = await startRegistration(await resp.json());
 			const verificationResp = await fetch('/verify-registration', {
 				method: 'POST',
