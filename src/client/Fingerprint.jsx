@@ -8,24 +8,9 @@ function Fingerprint() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isRegistered, setIsRegistered] = useState(false);
 
-	function doesSupport() {
-		let bool = false;
-		if (window.PublicKeyCredential) {
-			PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()
-				.then((uvpaa) => {
-					if (!uvpaa) bool = false;
-					else bool = true;
-				})
-				.catch((err) => {
-					console.error(err);
-					bool = false;
-				});
-		}
-		return bool;
-	}
 	return (
 		<div>
-			{doesSupport() ? (
+			{browserSupportsWebAuthn() ? (
 				isRegistered ? (
 					isLoggedIn ? (
 						<LogoutForm onLogout={() => setIsLoggedIn(false)} />
