@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 function RegisterForm({ onRegister }) {
 	const [err, setErr] = useState('');
-	const [showButtons, setShowButtons] = useState(false);
+	const [showGoToLogin, setShowGoToLogin] = useState(false);
 	async function handleSubmit(e) {
 		e.preventDefault();
 		let attResp;
@@ -33,7 +33,7 @@ function RegisterForm({ onRegister }) {
 				setErr(
 					'Error: Authenticator was probably already registered by user'
 				);
-				setShowButtons(true);
+				setShowGoToLogin(true);
 			} else {
 				setErr(error.message);
 			}
@@ -50,27 +50,26 @@ function RegisterForm({ onRegister }) {
 			<button className='btn'>Register</button>
 			<br />
 			<span>{err}</span>
-			{showButtons && (
-				<div>
-					<button
-						className='btn'
-						onClick={onRegister}
-					>
-						Go To Login
-					</button>
-					<button
-						className='btn'
-						onClick={async () => {
-							try {
-								await fetch('/clear-registration');
-							} catch (err) {
-								console.error(err);
-							}
-						}}
-					>
-						Clear Registration
-					</button>
-				</div>
+
+			<button
+				className='btn'
+				onClick={async () => {
+					try {
+						await fetch('/clear-registration');
+					} catch (err) {
+						console.error(err);
+					}
+				}}
+			>
+				Clear Registration
+			</button>
+			{showGoToLogin && (
+				<button
+					className='btn'
+					onClick={onRegister}
+				>
+					Go To Login
+				</button>
 			)}
 		</form>
 	);
