@@ -6,7 +6,7 @@ const asyncHandler = require('express-async-handler');
 const Twilio = require('twilio');
 const base64url = require('base64url');
 const SimpleWebAuthnServer = require('@simplewebauthn/server');
-const session = require('express-session')
+const session = require('express-session');
 const memoryStore = require('memorystore');
 
 const {
@@ -254,6 +254,13 @@ app.post('/verify-authentication', async (req, res) => {
 	req.session.currentChallenge = undefined;
 
 	res.send({ verified });
+});
+
+app.get('/clear-registration', (req, res) => {
+	req.session.destroy();
+	user.devices = [];
+
+	res.sendStatus(200)
 });
 
 ViteExpress.listen(app, port, () =>

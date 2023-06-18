@@ -5,8 +5,9 @@ function CodeForm({ onVerify, phoneNumber }) {
 	const [errMsg, setErrMsg] = useState('');
 	const formRef = useRef(null);
 	useEffect(() => {
+		let form, handler;
 		if ('OTPCredential' in window) {
-			const form = formRef.current;
+			form = formRef.current;
 			const ac = new AbortController();
 			const handler = () => {
 				ac.abort();
@@ -26,7 +27,7 @@ function CodeForm({ onVerify, phoneNumber }) {
 				});
 		}
 		return () => {
-			form.removeEventListener('submit', handler);
+			form?.removeEventListener('submit', handler);
 		};
 	}, []);
 	async function handleSubmit(e) {
@@ -45,7 +46,7 @@ function CodeForm({ onVerify, phoneNumber }) {
 					body: JSON.stringify(payload),
 				}
 			);
-			if (response.status !== 200) throw new Error('Error');
+			if (response.status !== 200) throw new Error('Wrong input');
 			onVerify(true);
 		} catch (error) {
 			if (error instanceof Error) setErrMsg(error.message);
