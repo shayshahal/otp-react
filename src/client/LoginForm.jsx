@@ -1,5 +1,5 @@
 import { startAuthentication } from '@simplewebauthn/browser';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function LoginForm({ onLogin }) {
 	const [err, setErr] = useState('');
@@ -7,10 +7,8 @@ function LoginForm({ onLogin }) {
 		let asseResp;
 		try {
 			const resp = await fetch('/generate-authentication-options');
-			const opts = await resp.json()
-			console.log(opts);
+			const opts = await resp.json();
 			asseResp = await startAuthentication(opts);
-			console.log(asseResp);
 			// POST the response to the endpoint that calls
 			const verificationResp = await fetch('/verify-authentication', {
 				method: 'POST',
@@ -43,15 +41,13 @@ function LoginForm({ onLogin }) {
 		await auth();
 	}
 
-	useEffect(() => {
-		const callAuth = async () => await auth();
-		callAuth();
-	}, []);
-
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			onSubmit={handleSubmit}
+			className='form'
+		>
 			<span>{err}</span>
-			<button>Login</button>
+			<button className='btn'>Login</button>
 		</form>
 	);
 }

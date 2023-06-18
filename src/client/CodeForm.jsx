@@ -35,13 +35,16 @@ function CodeForm({ onVerify, phoneNumber }) {
 		const payload = Object.fromEntries(form);
 
 		try {
-			const response = await fetch(window.location.origin + '/verify-code', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(payload),
-			});
+			const response = await fetch(
+				window.location.origin + '/verify-code',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(payload),
+				}
+			);
 			if (response.status !== 200) throw new Error('Error');
 			onVerify(true);
 		} catch (error) {
@@ -54,8 +57,12 @@ function CodeForm({ onVerify, phoneNumber }) {
 		<form
 			onSubmit={handleSubmit}
 			ref={formRef}
+			className='form'
 		>
-			<label htmlFor='one-time-code'>
+			<label
+				htmlFor='one-time-code'
+				className='inputLabel'
+			>
 				<input
 					type='text'
 					name='verificationCode'
@@ -65,16 +72,16 @@ function CodeForm({ onVerify, phoneNumber }) {
 					id='one-time-code'
 					value={otp}
 					onChange={(e) => setOtp(e.target.value)}
+					className='input'
 				/>
-				<span>{errMsg}</span>
 			</label>
+			<span>{errMsg}</span>
 			<input
 				type='hidden'
 				name='phoneNumber'
 				value={phoneNumber}
 			/>
-			<span>{otp}</span>
-			<button>Verify</button>
+			<button className='btn'>Verify</button>
 		</form>
 	);
 }

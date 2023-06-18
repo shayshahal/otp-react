@@ -40,14 +40,11 @@ function RegisterForm({ onRegister }) {
 		}
 	}
 	return (
-		<form onSubmit={handleSubmit}>
-			<button
-				type='button'
-				onClick={onRegister}
-			>
-				Go to login
-			</button>
-			<button>Register</button>
+		<form
+			onSubmit={handleSubmit}
+			className='form'
+		>
+			<button className='btn'>Register</button>
 			<br />
 			<span>{err}</span>
 		</form>

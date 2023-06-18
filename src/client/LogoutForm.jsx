@@ -5,9 +5,12 @@ function LogoutForm({ onLogout }) {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			onSubmit={handleSubmit}
+			className='form'
+		>
 			<h1>Hi!</h1>
-			<button>Logout</button>
+			<button className='btn'>Logout</button>
 		</form>
 	);
 }

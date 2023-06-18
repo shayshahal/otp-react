@@ -26,18 +26,25 @@ function PhoneForm({ onSend }) {
 		}
 	}
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor='phoneNumber'>
-				phone number:
+		<form
+			onSubmit={handleSubmit}
+			className='form'
+		>
+			<label
+				htmlFor='phoneNumber'
+				className='inputLabel'
+			>
 				<input
 					type='tel'
 					name='phoneNumber'
 					required
 					id='phoneNumber'
+					placeholder='enter a phone number...'
+					className='input'
 				/>
-				<span>{errMsg}</span>
 			</label>
-			<button>Send Code</button>
+			<span>{errMsg}</span>
+			<button className='btn'>Send Code To Phone</button>
 		</form>
 	);
 }

@@ -1,4 +1,4 @@
-function Nav({ setAppState }) {
+function Nav({ setAppState, appState }) {
 	return (
 		<nav>
 			<ul>
@@ -7,6 +7,9 @@ function Nav({ setAppState }) {
 						onClick={() => {
 							setAppState('sms');
 						}}
+						className={
+							'navbtn ' +( appState === 'sms' ? ' active' : '')
+						}
 					>
 						SMS
 					</button>
@@ -16,6 +19,11 @@ function Nav({ setAppState }) {
 						onClick={() => {
 							setAppState('fingerprint');
 						}}
+						className={
+							'navbtn ' + (appState === 'fingerprint'
+								? ' active'
+								: '')
+						}
 					>
 						Fingerprint
 					</button>

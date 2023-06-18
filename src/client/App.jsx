@@ -7,7 +7,7 @@ function App() {
 	const [appState, setAppState] = useState('fingerprint');
 	return (
 		<>
-			<Nav setAppState={setAppState} />
+			<Nav setAppState={setAppState} appState={appState}/>
 			{appState === 'sms' ? <Sms /> : <Fingerprint />}
 		</>
 	);
