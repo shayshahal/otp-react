@@ -53,6 +53,18 @@ app.use(
 		}),
 	})
 );
+
+/**
+ * Make sure two Uint8Arrays are deeply equivalent
+ */
+function areEqual(array1, array2) {
+	if (array1.length != array2.length) {
+		return false;
+	}
+
+	return array1.every((val, i) => val === array2[i]);
+}
+
 app.use((req, res, next) => {
 	req.body.phoneNumber = '+972' + req.body.phoneNumber;
 	next();
@@ -149,7 +161,7 @@ app.post('/verify-registration', async (req, res) => {
 		const { credentialPublicKey, credentialID, counter } = registrationInfo;
 
 		const existingDevice = user.devices.find((device) =>
-			base64url.isoUint8Array.areEqual(device.credentialID, credentialID)
+			areEqual(device.credentialID, credentialID)
 		);
 
 		if (!existingDevice) {
@@ -204,16 +216,6 @@ app.post('/verify-authentication', async (req, res) => {
 	const bodyCredIDBuffer = base64url.toBuffer(body.rawId);
 	// "Query the DB" here for an authenticator matching `credentialID`
 
-	/**
-	 * Make sure two Uint8Arrays are deeply equivalent
-	 */
-	function areEqual(array1, array2) {
-		if (array1.length != array2.length) {
-			return false;
-		}
-
-		return array1.every((val, i) => val === array2[i]);
-	}
 	for (const dev of user.devices) {
 		if (areEqual(dev.credentialID, bodyCredIDBuffer)) {
 			dbAuthenticator = dev;
@@ -260,7 +262,7 @@ app.get('/clear-registration', (req, res) => {
 	req.session.destroy();
 	user.devices = [];
 
-	res.sendStatus(200)
+	res.sendStatus(200);
 });
 
 ViteExpress.listen(app, port, () =>
