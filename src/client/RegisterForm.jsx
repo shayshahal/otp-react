@@ -59,10 +59,11 @@ function RegisterForm({ onRegister }) {
 						Go To Login
 					</button>
 					<button
-						className='button'
+						className='btn'
 						onClick={async () => {
 							try {
 								await fetch('/clear-registration');
+								onRegister();
 							} catch (err) {
 								console.error(err);
 							}
