@@ -6,18 +6,16 @@ function RegisterForm({ onRegister }) {
 	const [showButtons, setShowButtons] = useState(false);
 	async function handleSubmit(e) {
 		e.preventDefault();
-		let attResp, ac;
+		let attResp;
 		try {
 			const resp = await fetch('/generate-registration-options');
 			attResp = await startRegistration(await resp.json());
-			ac = new AbortController();
 			const verificationResp = await fetch('/verify-registration', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(attResp),
-				signal: ac.signal,
 			});
 			const verificationJSON = await verificationResp.json();
 			if (verificationJSON && verificationJSON.verified) {
@@ -36,7 +34,6 @@ function RegisterForm({ onRegister }) {
 					'Error: Authenticator was probably already registered by user'
 				);
 				setShowButtons(true);
-				ac.abort();
 			} else {
 				setErr(error.message);
 			}
