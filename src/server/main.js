@@ -51,6 +51,7 @@ app.use(
 		store: new MemoryStore({
 			checkPeriod: 86_400_000, // prune expired entries every 24h
 		}),
+		unset: 'destroy',
 	})
 );
 
@@ -259,7 +260,7 @@ app.post('/verify-authentication', async (req, res) => {
 });
 
 app.get('/clear-registration', (req, res) => {
-	req.session.destroy();
+	delete req.session;
 	user.devices = [];
 
 	res.sendStatus(200);
