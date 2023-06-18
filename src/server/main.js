@@ -149,7 +149,7 @@ app.post('/verify-registration', async (req, res) => {
 		const { credentialPublicKey, credentialID, counter } = registrationInfo;
 
 		const existingDevice = user.devices.find((device) =>
-			isoUint8Array.areEqual(device.credentialID, credentialID)
+			base64url.isoUint8Array.areEqual(device.credentialID, credentialID)
 		);
 
 		if (!existingDevice) {
