@@ -8,7 +8,7 @@ import Register from './Register';
 function Fingerprint() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isRegistered, setIsRegistered] = useState(false);
-	const [err, setErr] = useState('');
+	const [msg, setMsg] = useState('');
 	return browserSupportsWebAuthn() ? (
 		<form
 			className='form'
@@ -16,45 +16,42 @@ function Fingerprint() {
 				e.preventDefault();
 			}}
 		>
-			<p className='status'>
-				{isRegistered ? 'Already registered' : 'Not registered'}
-				<br />
-				If you are registered, you can only un register or login. <br />
-				If you are un registered, you can only register
-			</p>
+			<span className='status'>
+				{'status: '}
+				{isRegistered ? 'Registered' : 'Not registered'}
+			</span>
+			<p>{msg}</p>
 			<Register
 				onRegister={() => {
 					setIsRegistered(true);
 					setIsLoggedIn(false);
-					setErr('');
+					setMsg('Registration succeeded!');
 				}}
-				setErr={setErr}
+				setMsg={setMsg}
 			/>
 			{isLoggedIn ? (
 				<Logout
 					onLogout={() => {
 						setIsLoggedIn(false);
-						setErr('');
+						setMsg('Logout succeeded!');
 					}}
 				/>
 			) : (
 				<Login
 					onLogin={() => {
 						setIsLoggedIn(true);
-						setErr('');
+						setMsg('Login succeeded!');
 					}}
-					setErr={setErr}
 				/>
 			)}
 			<CleanRegistration
 				onClean={() => {
 					setIsRegistered(false);
 					setIsLoggedIn(false);
-					setErr('');
+					setMsg('Registration cleaned up successfully!');
 				}}
-				setErr={setErr}
+				setMsg={setMsg}
 			/>
-			<p>{err}</p>
 		</form>
 	) : (
 		<div>Browser does not support Web Authentication!</div>

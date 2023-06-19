@@ -1,11 +1,16 @@
-function CleanRegistration({ onClean, setErr }) {
+import { useEffect } from 'react';
+
+function CleanRegistration({ onClean, setMsg }) {
+	useEffect(() => {
+		handleClick();
+	}, []);
 	async function handleClick() {
 		try {
 			await fetch('/clear-registration', { method: 'POST' });
 			onClean();
 		} catch (error) {
 			console.error(error);
-            setErr(error.message)
+			setMsg(error.message);
 		}
 	}
 	return (

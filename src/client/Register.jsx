@@ -1,6 +1,6 @@
 import { startRegistration } from '@simplewebauthn/browser';
 
-function RegisterForm({ onRegister, setErr }) {
+function RegisterForm({ onRegister, setMsg }) {
 	async function handleClick() {
 		let attResp;
 		try {
@@ -17,7 +17,7 @@ function RegisterForm({ onRegister, setErr }) {
 			if (verificationJSON && verificationJSON.verified) {
 				onRegister();
 			} else {
-				setErr(
+				setMsg(
 					`Oh no, something went wrong! Response: ${JSON.stringify(
 						verificationJSON
 					)}`
@@ -26,11 +26,11 @@ function RegisterForm({ onRegister, setErr }) {
 		} catch (error) {
 			// Some basic error handling
 			if (error.name === 'InvalidStateError') {
-				setErr(
-					'Error: Authenticator was probably already registered by user'
+				setMsg(
+					'Authenticator was probably already registered by user. \nIf you are registered,  you can only clean registration or login'
 				);
 			} else {
-				setErr(error.message);
+				setMsg(error.message);
 			}
 			console.error(error);
 		}
@@ -40,7 +40,6 @@ function RegisterForm({ onRegister, setErr }) {
 		<button
 			className='btn'
 			onClick={handleClick}
-			
 		>
 			Register
 		</button>
