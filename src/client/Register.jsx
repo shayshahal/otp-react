@@ -1,9 +1,7 @@
 import { startRegistration } from '@simplewebauthn/browser';
-import { useState } from 'react';
 
-function RegisterForm({ onRegister }) {
-	const [err, setErr] = useState('');
-	async function handleClick(e) {
+function RegisterForm({ onRegister, setErr }) {
+	async function handleClick() {
 		let attResp;
 		try {
 			const resp = await fetch('/generate-registration-options');

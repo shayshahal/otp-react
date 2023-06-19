@@ -1,7 +1,6 @@
 import { startAuthentication } from '@simplewebauthn/browser';
-import { useState } from 'react';
 
-function Login({ onLogin }) {
+function Login({ onLogin, setErr }) {
 	async function auth() {
 		let asseResp;
 		try {
@@ -31,6 +30,7 @@ function Login({ onLogin }) {
 				);
 			}
 		} catch (error) {
+			setErr(error);
 			console.error(error);
 		}
 	}

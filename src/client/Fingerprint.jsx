@@ -8,7 +8,7 @@ import Register from './Register';
 function Fingerprint() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isRegistered, setIsRegistered] = useState(false);
-
+	const [err, setErr] = useState('');
 	return browserSupportsWebAuthn() ? (
 		<form className='form'>
 			<p className='status'>
@@ -22,13 +22,21 @@ function Fingerprint() {
 					setIsRegistered(true);
 					setIsLoggedIn(false);
 				}}
+				setErr={setErr}
 			/>
 			{isLoggedIn ? (
 				<Logout onLogout={() => setIsLoggedIn(false)} />
 			) : (
-				<Login onLogin={() => setIsLoggedIn(true)} />
+				<Login
+					onLogin={() => setIsLoggedIn(true)}
+					setErr={setErr}
+				/>
 			)}
-			<CleanRegistration onClean={() => setIsRegistered(false)} />
+			<CleanRegistration
+				onClean={() => setIsRegistered(false)}
+				setErr={setErr}
+			/>
+			<p>{err}</p>
 		</form>
 	) : (
 		<div>Browser does not support Web Authentication!</div>
