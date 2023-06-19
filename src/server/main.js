@@ -259,8 +259,8 @@ app.post('/verify-authentication', async (req, res) => {
 	res.send({ verified });
 });
 
-app.get('/clear-registration', (req, res) => {
-	delete req.session;
+app.post('/clear-registration', (req, res) => {
+	req.session.destroy();
 	user.devices = [];
 
 	res.sendStatus(200);

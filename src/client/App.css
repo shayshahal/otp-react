@@ -63,8 +63,12 @@ ul {
 	font-size: 1.2em;
 	color: #1a1a1a;
 }
-.form{
-  height: 100%;
-  display: grid;
-  place-content: center;
+.form {
+	height: 100%;
+	display: grid;
+	place-content: center;
+}
+.status{
+	font-size: .8em;
+	text-align: center;
 }

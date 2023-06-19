@@ -1,8 +1,7 @@
 import { startAuthentication } from '@simplewebauthn/browser';
 import { useState } from 'react';
 
-function LoginForm({ onLogin }) {
-	const [err, setErr] = useState('');
+function Login({ onLogin }) {
 	async function auth() {
 		let asseResp;
 		try {
@@ -32,23 +31,20 @@ function LoginForm({ onLogin }) {
 				);
 			}
 		} catch (error) {
-			setErr(error.message);
 			console.error(error);
 		}
 	}
-	async function handleSubmit(e) {
-		e.preventDefault();
+	async function handleClick() {
 		await auth();
 	}
 
 	return (
-		<form
-			onSubmit={handleSubmit}
-			className='form'
+		<button
+			className='btn'
+			onClick={handleClick}
 		>
-			<span>{err}</span>
-			<button className='btn'>Login</button>
-		</form>
+			Login
+		</button>
 	);
 }
-export default LoginForm;
+export default Login;
