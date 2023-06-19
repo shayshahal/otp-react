@@ -30,7 +30,7 @@ function Login({ onLogin, setErr }) {
 				);
 			}
 		} catch (error) {
-			setErr(error);
+			setErr(error.message);
 			console.error(error);
 		}
 	}

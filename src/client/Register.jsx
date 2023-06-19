@@ -32,7 +32,6 @@ function RegisterForm({ onRegister, setErr }) {
 			} else {
 				setErr(error.message);
 			}
-
 			console.error(error);
 		}
 	}
@@ -41,6 +40,7 @@ function RegisterForm({ onRegister, setErr }) {
 		<button
 			className='btn'
 			onClick={handleClick}
+			
 		>
 			Register
 		</button>

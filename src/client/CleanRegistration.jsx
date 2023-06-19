@@ -3,9 +3,9 @@ function CleanRegistration({ onClean, setErr }) {
 		try {
 			await fetch('/clear-registration', { method: 'POST' });
 			onClean();
-		} catch (err) {
-			console.error(err);
-            setErr(err)
+		} catch (error) {
+			console.error(error);
+            setErr(error.message)
 		}
 	}
 	return (

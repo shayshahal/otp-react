@@ -10,7 +10,12 @@ function Fingerprint() {
 	const [isRegistered, setIsRegistered] = useState(false);
 	const [err, setErr] = useState('');
 	return browserSupportsWebAuthn() ? (
-		<form className='form'>
+		<form
+			className='form'
+			onSubmit={(e) => {
+				e.preventDefault();
+			}}
+		>
 			<p className='status'>
 				{isRegistered ? 'Already registered' : 'Not registered'}
 				<br />
