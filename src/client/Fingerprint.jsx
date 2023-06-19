@@ -38,7 +38,10 @@ function Fingerprint() {
 				/>
 			)}
 			<CleanRegistration
-				onClean={() => setIsRegistered(false)}
+				onClean={() => {
+					setIsRegistered(false);
+					setIsLoggedIn(false);
+				}}
 				setErr={setErr}
 			/>
 			<p>{err}</p>
