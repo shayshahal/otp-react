@@ -26,14 +26,23 @@ function Fingerprint() {
 				onRegister={() => {
 					setIsRegistered(true);
 					setIsLoggedIn(false);
+					setErr('');
 				}}
 				setErr={setErr}
 			/>
 			{isLoggedIn ? (
-				<Logout onLogout={() => setIsLoggedIn(false)} />
+				<Logout
+					onLogout={() => {
+						setIsLoggedIn(false);
+						setErr('');
+					}}
+				/>
 			) : (
 				<Login
-					onLogin={() => setIsLoggedIn(true)}
+					onLogin={() => {
+						setIsLoggedIn(true);
+						setErr('');
+					}}
 					setErr={setErr}
 				/>
 			)}
@@ -41,6 +50,7 @@ function Fingerprint() {
 				onClean={() => {
 					setIsRegistered(false);
 					setIsLoggedIn(false);
+					setErr('');
 				}}
 				setErr={setErr}
 			/>
